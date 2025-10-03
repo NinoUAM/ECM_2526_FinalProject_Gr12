@@ -1,5 +1,7 @@
 
 Dans ce sous dossier :
 
-Script d'EDA
+Script d'EDA : Explore Data Analysis
 Script de ML
+si trouvent les df.head(), df.describe() etc, ainsi que la partie de cleaning
+ANALYSE.ip
