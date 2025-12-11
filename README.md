@@ -6,5 +6,8 @@ Comment évaluer et prédire la viabilité commerciale et les risques éthiques 
 Le nom  de chaque personne, compte GitHub et Kaggle.
 Jajar26, audreynrr, NinoUAM, mailisbrs
 
-Problème resolu : difficile d'avoir des informations sur les start-ups pour investir 
+Contexte : Fond financier qui investit dans des start-ups pharmaceutiques "éthiques" (critère ESG-Bert)
+Problème résolu : Difficile d'avoir des informations sur les start-ups pour investir en général
+Valeur ajoutée : Considération "éthique", centralisation des informations 
+Machine learning nécessaire car beaucoup d'informations et elles changent avec le temps 
 
