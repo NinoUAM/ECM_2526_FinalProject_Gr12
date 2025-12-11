@@ -10,4 +10,7 @@ Contexte : Fond financier qui investit dans des start-ups pharmaceutiques "éthi
 Problème résolu : Difficile d'avoir des informations sur les start-ups pour investir en général
 Valeur ajoutée : Considération "éthique", centralisation des informations 
 Machine learning nécessaire car beaucoup d'informations et elles changent avec le temps 
+Objectifs : Construire une base de données propre, Pourvoir prédire la future valeur pour des nouvelles entrées
+Solution : Faire un premier modèle utilisant ESG-Bert pour construire le score éthique, Faire un second modèle qui prédit la future valeur de la start-up en prenant aussi en considération le score éthique 
+
 
