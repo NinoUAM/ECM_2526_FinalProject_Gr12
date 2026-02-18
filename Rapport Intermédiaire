@@ -1,0 +1,55 @@
+Rapport Intermédiaire : Prédiction de Succès en Biopharma et Analyse Éthique
+
+Équipe 12 : Nino Tissot (NinoUAM), Audrey Nourry (audreynrr), Mailis Briens (mailisbrs), Hajar Belgroun (Jajar26).
+1. Problématique et Contexte Stratégique
+Ce projet simule la gestion d'un fonds d'investissement dédié au secteur pharmaceutique. Dans le capital-risque, l'asymétrie d'information est un obstacle majeur : la complexité des innovations scientifiques rend l'évaluation de la viabilité commerciale à long terme particulièrement incertaine.
+Problématique : Comment anticiper la réussite financière et évaluer l'intégrité éthique des startups pharmaceutiques afin d'optimiser les décisions d'allocation de capital ?
+Notre approche repose sur le croisement de données financières classiques avec une analyse automatisée de “l’éthique” via le modèle de langage ESG-BERT.
+2. Cahier des Charges Technique
+L'étude s'appuie sur le jeu de données Investments_VC, complété par des recherches textuelles automatisées.
+Périmètre sectoriel : L'analyse se concentre uniquement sur les organisations liées à la pharmacie et aux biotechnologies (environ 4 030 entités filtrées).
+Variable Cible (Target) : Le succès, nommé "Profitable", est défini par un statut d'acquisition ou d'introduction en bourse (IPO), tandis que l'échec correspond au statut "Closed".
+Prévention du biais temporel (Non-leakage) : Nous avons fixé une date de coupure au 01/01/2012. L'entraînement s'effectue sur des données historiques pour garantir que le modèle prédit l'avenir sans en connaître l'issue à l'avance.
+Variables de performance : Pour évaluer le potentiel d'une entreprise, nous regardons surtout sa capacité à lever financement rapidement par rapport à son âge, ainsi que la régularité avec laquelle elle réussit à attirer de nouveaux investisseurs.
+3. Analyse Exploratoire des Données (EDA)
+Volume d'entraînement : L'échantillon d'apprentissage regroupe désormais 272 startups.
+Équilibre des classes : La répartition est désormais équilibrée avec 145 succès (1) et 127 échecs (0), soit un taux de succès de 53,3%. Cette parité renforce la fiabilité des prédictions.
+
+Traitement de la donnée :
+Les variables financières ont été nettoyées (suppression des caractères spéciaux) et converties au format numérique.
+Les valeurs manquantes ont été traitées par imputation de la médiane sectorielle pour ne pas fausser les statistiques globales.
+Aucune valeur manquante ne subsiste sur les 15 variables utilisées pour l'entraînement.
+4. Modélisation et Baseline (Machine Learning)
+Pour ce projet, nous avons choisi de ne pas nous appuyer sur un seul algorithme. Notre approche consiste à faire travailler plusieurs modèles ensemble pour obtenir une prédiction plus fiable.
+Nous avons évalué quatre algorithmes différents sur notre échantillon de test afin d'analyser leurs forces respectives. Bien que les performances actuelles soient encore modestes (autour de 60% d'accuracy), elles constituent un point de départ solide pour un secteur aussi complexe que la biopharma :
+Gradient Boosting : C'est actuellement notre modèle le plus performant. (Accuracy : 60,0% | F1-Score : 63,3%).
+Régression Logistique : Fournit une base linéaire stable. (Accuracy : 56,4% | F1-Score : 61,3%).
+Random Forest : Affiche des résultats identiques à la régression logistique sur cet échantillon. (Accuracy : 56,4% | F1-Score : 61,3%).
+SVM (Support Vector Machine) : Se montre légèrement plus prudent sur le rappel. (Accuracy : 58,2% | F1-Score : 59,6%).
+Pour ce rendu intermédiaire, notre baseline de classement est un consensus par moyenne simple : nous faisons la moyenne des probabilités de ces quatre modèles pour obtenir une note globale.
+5. Perspectives : 
+Rentabilité financière ML
+La marge de progression pour la version finale du projet réside dans Au lieu d'une moyenne simple, notre modèle final sera un ensemble pondéré. Nous devrons déterminer mathématiquement les bons poids (coefficients) à associer à chaque modèle pour maximiser la précision globale et limiter l'impact des erreurs individuelles de chaque IA.
+Analyse Éthique par NLP
+L'étape suivante consiste à intégrer l'indice éthique comme nouvelle variable du modèle. Notre avons une première solution qui permet déjà de :
+Extraire les données d'essais cliniques via ClinicalTrials.gov.
+Collecter les publications académiques sur PubMed.
+Utiliser ESG-BERT pour générer des scores de responsabilité sociale et de gouvernance.
+6. Limites Identifiées et Contraintes
+6.1. Limites liées aux données et à l'échantillonnage
+Taille réduite de l'échantillon d'entraînement : Avec seulement 272 startups identifiées pour la phase d'apprentissage, le modèle est exposé à un risque de surapprentissage (overfitting). Un échantillon si restreint peut ne pas capturer toute la diversité des échecs et succès du secteur biopharmaceutique.
+Biais d'imputation des données manquantes : L'utilisation systématique de la médiane sectorielle pour atteindre un taux de 0% de valeurs manquantes (NaN) sur les 15 variables peut lisser artificiellement la variance des données. Si une part trop importante des financements a été imputée, le modèle risque d'apprendre sur des valeurs moyennes plutôt que sur des signaux réels.
+Regroupement géographique restrictif : La réduction des localisations à seulement 4 catégories de pays simplifie certes le modèle, mais efface les spécificités des écosystèmes locaux (hubs de Cambridge vs Silicon Valley), qui influencent pourtant fortement les probabilités d'IPO.
+6.2. Limites de la modélisation Machine Learning
+Performance modeste de la baseline : Les scores actuels oscillent autour de 60% d'accuracy. Pour un fonds d'investissement, ce taux de succès est encore trop proche du hasard pour justifier des décisions financières lourdes.
+Consensus naïf par moyenne simple : Actuellement, notre modèle finalise ses prédictions par une moyenne simple des scores de chaque algorithme. Cette méthode ne tient pas compte du fait que certains modèles (comme le Gradient Boosting) sont statistiquement plus performants que d'autres (comme la Régression Logistique) sur cet échantillon spécifique.
+6.3. Limites de l'analyse éthique par NLP
+Problème du "Cold Start" scientifique : Les startups les plus récentes ou en mode "stealth" n'ont souvent aucun historique sur PubMed ou ClinicalTrials.gov. L'absence de texte rend l'évaluation éthique impossible, créant un angle mort pour l'analyse des projets en phase d'amorçage (Seed).
+Fragilité du scraping et de l'heuristique :
+La collecte de données sur les sites web repose sur une construction d'URL simplifiée (format startupname.com/about), ce qui génère des erreurs de type 404 pour les structures ayant des noms de domaine complexes.
+Le système de notation par mots-clés est binaire et ne comprend pas la négation ou le contexte, contrairement au modèle BERT.
+Alertes architecturales de l'IA : Le chargement du modèle ESG-BERT génère des avertissements sur des clés inattendues (unexpected keys). Bien que non bloquants, ces messages indiquent une légère divergence entre l'architecture de classification utilisée et celle prévue par le modèle original, ce qui pourrait impacter la précision des scores éthiques dans des contextes très spécifiques.
+6.4. Limite d'intégration
+Parallélisme des modèles : À ce stade, le score financier et le score éthique sont calculés de manière indépendante. Le projet n'a pas encore atteint l'objectif ultime de fusionner ces deux dimensions pour vérifier si une startup "éthique" a statistiquement plus de chances de devenir "profitable".
+
+
