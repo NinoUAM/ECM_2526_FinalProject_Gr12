@@ -1,25 +1,234 @@
-# ECM_2526_FinalProject_Gr12
-Projet final DATA dans le cadre de l'approfondissement DDEFI
+# ECM_2526_FinalProject_Gr12  
+### Predicting Investment Potential and Ethical Risk in Pharmaceutical Startups
 
-Premières pistes : startup pharmaceutique, focal sur les problèmes éthiques
+---
 
-Estimer la probabilité de financement et le risque éthique des startups pharmaceutiques
+# Project Overview
 
-Comment évaluer et prédire la viabilité commerciale et les risques éthiques d’innovations pharmaceutiques portées par des startups, afin d’aider investisseurs et fondateurs à décider du financement (et des conditions) des projets ?
+This project explores the use of **Machine Learning to evaluate pharmaceutical startups for investment purposes**, with a dual focus on:
 
-Le nom  de chaque personne, compte GitHub et Kaggle.
-Jajar26, audreynrr, NinoUAM, mailisbrs
+- **Commercial viability**
+- **Ethical and ESG-related risk**
 
-Contexte : Fond financier qui investit dans des start-ups pharmaceutiques "éthiques" (critère ESG-Bert)
+Biotechnology innovation presents significant investment opportunities but also substantial uncertainty. Pharmaceutical startups often operate in complex regulatory environments and face ethical scrutiny related to clinical trials, drug accessibility, and societal impact.
 
-Problème résolu : Difficile d'avoir des informations sur les start-ups pour investir en général
+The objective of this project is to design a **data-driven decision support system** capable of assessing both **investment potential** and **ethical risk**, enabling investors to make more informed decisions.
 
-Valeur ajoutée : Considération "éthique", centralisation des informations 
+The system is designed particularly for **investment funds specializing in ethical biotech innovation**.
 
-Machine learning nécessaire car beaucoup d'informations et elles changent avec le temps 
+---
 
-Objectifs : Construire une base de données propre, Pouvoir prédire la future valeur pour des nouvelles entrées
+# Teaching & Supervision
 
-Solution : Faire un premier modèle utilisant ESG-Bert pour construire le score éthique, Faire un second modèle qui prédit la future valeur de la start-up en prenant aussi en considération le score éthique 
+This project was developed as part of the **Data Science curriculum at École Centrale Méditerranéenne** within the **DDEFI specialization track**.
 
+Course taught by:
 
+**[Sitraka Matthieu FORLER](https://www.linkedin.com/in/sitraka-matthieu-forler/)**  
+Senior Data Scientist and Professor of Applied Machine Learning
+
+---
+
+# Project Team
+
+### Team Members
+
+**[Jajar26](https://github.com/Jajar26)**  
+GitHub: https://github.com/Jajar26  
+Kaggle: https://www.kaggle.com/jajar26  
+
+**[audreynrr](https://github.com/audreynrr)**  
+GitHub: https://github.com/audreynrr  
+Kaggle: https://www.kaggle.com/audreynrr  
+
+**[NinoUAM](https://github.com/NinoUAM)**  
+GitHub: https://github.com/NinoUAM  
+Kaggle: https://www.kaggle.com/ninouam  
+
+**[mailisbrs](https://github.com/mailisbrs)**  
+GitHub: https://github.com/mailisbrs  
+Kaggle: https://www.kaggle.com/mailisbrs  
+
+---
+
+# Problem Statement
+
+Evaluating pharmaceutical startups is particularly challenging for investors.
+
+Several factors contribute to this difficulty:
+
+- Information about startups is **fragmented across multiple sources**
+- **Ethical considerations** are difficult to quantify
+- Biotech innovation involves **long development cycles and high failure rates**
+- Many projects **fail before reaching commercialization**
+
+As a result, traditional investment evaluation frameworks are often insufficient.
+
+This project aims to develop a **machine learning-based system capable of predicting both commercial viability and ethical risk** associated with pharmaceutical startups.
+
+---
+
+# Value Proposition
+
+The proposed system offers several advantages for investors:
+
+- Centralized analysis of **startup information**
+- **Quantified ethical risk scoring**
+- **Machine learning-based predictions** of startup value
+- Data-driven **decision support for investment strategies**
+
+By combining financial indicators with ESG analysis, the system provides a **more holistic evaluation framework for biotech investments**.
+
+---
+
+# Why Machine Learning?
+
+Machine Learning is particularly suited to this problem because:
+
+- Datasets are **large and heterogeneous**
+- Information sources include **structured and unstructured data**
+- Ethical signals are often embedded in **textual information**
+- Relationships between variables are **complex and nonlinear**
+
+Traditional analytical methods struggle to capture these interactions, while ML models can identify hidden patterns within the data.
+
+---
+
+# Dataset Construction
+
+The project involves building a **clean, structured dataset** integrating multiple data sources related to pharmaceutical startups.
+
+Data sources include:
+
+- **Startup metadata**  
+  (founding year, location, founders, sector)
+
+- **Scientific publications**  
+  related to the startup's research domain
+
+- **ESG indicators**
+
+- **Financial information**  
+  including funding rounds and valuation history
+
+- **Textual data**  
+  such as news articles, research reports, and public documents
+
+These datasets are cleaned, standardized, and merged to form the input for the machine learning pipeline.
+
+---
+
+# Models
+
+The system relies on **two complementary models**.
+
+---
+
+## Model 1 — Ethical Scoring
+
+The first model uses **ESG-BERT**, a transformer-based NLP model designed to analyze **ESG-related textual information**.
+
+The model processes:
+
+- news articles
+- research papers
+- public reports
+- regulatory information
+
+The objective is to generate an **ethical score for each pharmaceutical startup**, capturing potential ethical concerns related to:
+
+- clinical practices
+- environmental impact
+- governance
+- access to medicine
+
+This score serves as a **quantitative ethical risk indicator**.
+
+---
+
+## Model 2 — Investment Prediction
+
+The second model predicts the **investment potential of a startup**.
+
+Key outputs include:
+
+- **Predicted future startup value**
+- **Probability of successful funding**
+
+The model uses multiple inputs:
+
+- financial indicators
+- startup characteristics
+- innovation metrics
+- **ethical score generated by ESG-BERT**
+
+This architecture allows the model to integrate **both financial and ethical dimensions** in its prediction.
+
+---
+
+# Pipeline Architecture
+
+The project follows a structured Machine Learning pipeline.
+
+1. **Data Collection**  
+   Gathering data from startup databases, scientific sources, and ESG datasets
+
+2. **Data Cleaning**  
+   Removing inconsistencies, duplicates, and missing values
+
+3. **ESG Text Analysis**  
+   Processing textual documents with NLP models
+
+4. **Ethical Scoring**  
+   Generating an ethical risk score using ESG-BERT
+
+5. **Feature Engineering**  
+   Creating structured features for model training
+
+6. **Machine Learning Prediction Model**  
+   Training a predictive model for investment success
+
+7. **Investment Recommendation Layer**  
+   Combining predictions and scores to support investor decision-making
+
+---
+
+# Expected Outputs
+
+The system provides several outputs useful for investors:
+
+- **Ethical risk score**
+- **Predicted future startup valuation**
+- **Probability of funding success**
+- **Investment decision support indicators**
+
+These outputs can be integrated into **investment screening workflows** for biotech venture capital.
+
+---
+
+# Limitations
+
+Several limitations must be considered:
+
+- Startup data can be **incomplete or inconsistent**
+- ESG-based ethical scoring may introduce **algorithmic bias**
+- Predictions remain **probabilistic rather than deterministic**
+- The biotech sector has **high inherent uncertainty**
+
+As a result, the system should be used as **decision support rather than a fully automated investment tool**.
+
+---
+
+# Future Improvements
+
+Potential extensions of the project include:
+
+- Integration of **larger ESG datasets**
+- Connection with **biotechnology-specific databases**
+- Advanced **transformer models for scientific literature analysis**
+- **Reinforcement learning approaches** for dynamic investment strategies
+- Real-time **startup monitoring dashboards**
+
+These improvements could significantly enhance the predictive capabilities and practical applications of the system.
+
+---
