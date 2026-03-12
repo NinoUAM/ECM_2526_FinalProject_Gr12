@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biopharma ML — Équipe 12</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #070b12;
+    --surface: #0d1520;
+    --surface2: #111d2e;
+    --border: #1a2d45;
+    --accent: #00d4ff;
+    --accent2: #7c3aed;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --text: #e2eaf4;
+    --muted: #4a6380;
+    --font: 'Syne', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Background grid ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Glow orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .orb-1 { width: 600px; height: 600px; background: rgba(0,212,255,0.06); top: -200px; left: -200px; }
+  .orb-2 { width: 400px; height: 400px; background: rgba(124,58,237,0.08); bottom: -100px; right: -100px; }
+
+  /* ── Layout ── */
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+
+  /* ── Header ── */
+  header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .logo-text h1 {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+
+  .logo-text span {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .team-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .status-dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--success);
+    font-family: var(--mono);
+  }
+  .status-dot::before {
+    content: '';
+    width: 7px; height: 7px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* ── Grid layout ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(0,212,255,0.2); }
+
+  .card-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  /* ── Form inputs ── */
+  .field {
+    margin-bottom: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  input[type="number"], input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.08);
+  }
+
+  /* ── Toggle buttons ── */
+  .toggle-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: 9px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .toggle-btn.active {
+    background: rgba(0,212,255,0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Submit button ── */
+  .btn-predict {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--accent), #0099cc);
+    color: #000;
+    font-family: var(--font);
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-predict:hover { opacity: 0.9; }
+  .btn-predict:active { transform: scale(0.99); }
+  .btn-predict:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .btn-predict .spinner {
+    display: none;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(0,0,0,0.3);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin: 0 auto;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Results panel ── */
+  #results {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Verdict ── */
+  .verdict {
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid;
+  }
+  .verdict.success {
+    background: rgba(16,185,129,0.07);
+    border-color: rgba(16,185,129,0.3);
+  }
+  .verdict.failure {
+    background: rgba(239,68,68,0.07);
+    border-color: rgba(239,68,68,0.3);
+  }
+
+  .verdict-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .verdict-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .verdict-text {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .verdict.success .verdict-text { color: var(--success); }
+  .verdict.failure .verdict-text { color: var(--danger); }
+
+  .verdict-score {
+    margin-left: auto;
+    text-align: right;
+  }
+  .verdict-score .big-num {
+    font-size: 48px;
+    font-weight: 800;
+    font-family: var(--mono);
+    line-height: 1;
+  }
+  .verdict.success .big-num { color: var(--success); }
+  .verdict.failure .big-num { color: var(--danger); }
+  .verdict-score .big-label {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── Score bars ── */
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .score-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .score-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .score-val {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    width: 46px;
+    text-align: right;
+  }
+
+  /* ── Metric chips ── */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    flex: 1;
+    min-width: 120px;
+  }
+
+  .chip-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .chip-value {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── ESG badge ── */
+  .esg-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(124,58,237,0.12);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: #a78bfa;
+    margin-top: 8px;
+  }
+
+  /* ── Error ── */
+  .error-box {
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--danger);
+    display: none;
+    margin-top: 12px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+  }
+
+  /* ── API URL bar ── */
+  .api-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin-bottom: 32px;
+  }
+  .api-bar label {
+    font-size: 10px;
+    color: var(--muted);
+    margin: 0;
+    white-space: nowrap;
+  }
+  .api-bar input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 13px;
+    color: var(--accent);
+  }
+  .api-bar input:focus { box-shadow: none; }
+
+  @media (max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    header { flex-direction: column; gap: 16px; }
+    .verdict { flex-direction: column; text-align: center; }
+    .verdict-score { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">🧬</div>
+      <div class="logo-text">
+        <h1>Biopharma ML</h1>
+        <span>Prédiction de Succès & Analyse Éthique</span>
+      </div>
+    </div>
+    <div class="team-badge">
+      Nino Tissot · Audrey Nourry<br>
+      Mailis Briens · Hajar Belgroun<br>
+      <span class="status-dot" id="apiStatus">API déconnectée</span>
+    </div>
+  </header>
+
+  <!-- API URL -->
+  <div class="api-bar">
+    <label>API URL</label>
+    <input type="text" id="apiUrl" value="http://localhost:8000" placeholder="http://localhost:8000">
+    <button onclick="checkApi()" style="background:rgba(0,212,255,0.1);border:1px solid var(--accent);color:var(--accent);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--mono);font-size:11px;">PING</button>
+  </div>
+
+  <!-- Form -->
+  <div class="section-title">📊 Données de la Startup</div>
+
+  <div class="grid-2" style="margin-bottom: 16px;">
+
+    <!-- Financier -->
+    <div class="card">
+      <div class="card-title">💰 Features Financières</div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Âge (années)</label>
+          <input type="number" id="age" value="6.5" step="0.1" min="0">
+        </div>
+        <div class="field">
+          <label>Funding Total (USD)</label>
+          <input type="number" id="funding_total_usd" value="45000000" step="1000000">
+        </div>
+        <div class="field">
+          <label>Nb Rounds</label>
+          <input type="number" id="funding_rounds" value="3" min="0">
+        </div>
+        <div class="field">
+          <label>Jours 1er Funding</label>
+          <input type="number" id="days_to_first_funding" value="180">
+        </div>
+        <div class="field">
+          <label>Funding Duration</label>
+          <input type="number" id="funding_duration" value="1200">
+        </div>
+        <div class="field">
+          <label>Funding Velocity</label>
+          <input type="number" id="funding_velocity" value="6923076">
+        </div>
+        <div class="field">
+          <label>Round Intensity</label>
+          <input type="number" id="round_intensity" value="0.46" step="0.01">
+        </div>
+        <div class="field">
+          <label>Country Code</label>
+          <input type="number" id="country_code" value="1">
+        </div>
+      </div>
+
+      <div style="margin-top: 8px;">
+        <label style="margin-bottom: 10px;">Types de financement</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="field">
+            <label>Seed</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" onclick="setToggle('has_seed', 1, this)">Oui</button>
+              <button class="toggle-btn" onclick="setToggle('has_seed', 0, this)">Non</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Venture</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" onclick="setToggle('has_venture', 1, this)">Oui</button>
+              <button class="toggle-btn" onclick="setToggle('has_venture', 0, this)">Non</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Grant</label>
+            <div class="toggle-group">
+              <button class="toggle-btn" onclick="setToggle('has_grant', 1, this)">Oui</button>
+              <button class="toggle-btn active" onclick="setToggle('has_grant', 0, this)">Non</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Round A</label>
+            <div class="toggle-group">
+              <button class="toggle-btn active" onclick="setToggle('has_round_A', 1, this)">Oui</button>
+              <button class="toggle-btn" onclick="setToggle('has_round_A', 0, this)">Non</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Round B</label>
+            <div class="toggle-group">
+              <button class="toggle-btn" onclick="setToggle('has_round_B', 1, this)">Oui</button>
+              <button class="toggle-btn active" onclick="setToggle('has_round_B', 0, this)">Non</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Éthique -->
+    <div class="card">
+      <div class="card-title">🌱 Score Éthique ESG-BERT</div>
+
+      <div class="field">
+        <label>Adjusted Ethical Score</label>
+        <input type="number" id="adjusted_ethical_score" value="0.73" step="0.01" min="0" max="1">
+      </div>
+      <div class="field">
+        <label>Sentiment Score (0=négatif · 1=positif)</label>
+        <input type="number" id="sentiment_score" value="0.82" step="0.01" min="0" max="1">
+      </div>
+      <div class="field">
+        <label>Data Quality Score (nb sources / 30)</label>
+        <input type="number" id="data_quality_score" value="0.6" step="0.01" min="0" max="1">
+      </div>
+
+      <hr class="divider">
+
+      <div class="card-title">🎯 Modèle</div>
+      <div class="toggle-group">
+        <button class="toggle-btn" id="btn-financier" onclick="setMode('financier')">Financier seul</button>
+        <button class="toggle-btn active" id="btn-complet" onclick="setMode('complet')">Complet (F + ESG)</button>
+      </div>
+
+      <hr class="divider">
+
+      <button class="btn-predict" id="submitBtn" onclick="predict()">
+        <span id="btnText">⚡ Lancer la Prédiction</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+
+      <div class="error-box" id="errorBox"></div>
+    </div>
+
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+    <div class="section-title">📈 Résultats</div>
+
+    <!-- Verdict -->
+    <div class="verdict" id="verdictBox">
+      <div class="verdict-icon" id="verdictIcon"></div>
+      <div>
+        <div class="verdict-label">Prédiction</div>
+        <div class="verdict-text" id="verdictText"></div>
+      </div>
+      <div class="verdict-score">
+        <div class="big-num" id="scoreDisplay"></div>
+        <div class="big-label">Score Final</div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Score breakdown -->
+      <div class="card">
+        <div class="card-title">🔬 Décomposition des Scores</div>
+        <div id="scoreBars"></div>
+      </div>
+
+      <!-- Détails -->
+      <div class="card">
+        <div class="card-title">📋 Détails</div>
+        <div class="chips" id="chipsContainer"></div>
+        <div id="esgBadge"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── State ──
+  const toggleValues = {
+    has_seed: 1, has_venture: 1, has_grant: 0, has_round_A: 1, has_round_B: 1
+  };
+  let currentMode = 'complet';
+
+  function setToggle(field, val, btn) {
+    toggleValues[field] = val;
+    const group = btn.parentElement;
+    group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('btn-financier').classList.toggle('active', mode === 'financier');
+    document.getElementById('btn-complet').classList.toggle('active', mode === 'complet');
+  }
+
+  // ── Check API status ──
+  async function checkApi() {
+    const url = document.getElementById('apiUrl').value;
+    const el = document.getElementById('apiStatus');
+    try {
+      const r = await fetch(url + '/');
+      if (r.ok) {
+        el.textContent = 'API connectée';
+        el.style.color = 'var(--success)';
+      } else {
+        el.textContent = 'API erreur ' + r.status;
+        el.style.color = 'var(--danger)';
+      }
+    } catch {
+      el.textContent = 'API déconnectée';
+      el.style.color = 'var(--danger)';
+    }
+  }
+
+  // Auto-check on load
+  window.addEventListener('load', checkApi);
+
+  // ── Predict ──
+  async function predict() {
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const spinner = document.getElementById('spinner');
+    const errorBox = document.getElementById('errorBox');
+
+    // Loading state
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+    errorBox.style.display = 'none';
+    document.getElementById('results').style.display = 'none';
+
+    const payload = {
+      age:                    parseFloat(document.getElementById('age').value),
+      funding_total_usd:      parseFloat(document.getElementById('funding_total_usd').value),
+      funding_rounds:         parseInt(document.getElementById('funding_rounds').value),
+      days_to_first_funding:  parseFloat(document.getElementById('days_to_first_funding').value),
+      funding_duration:       parseFloat(document.getElementById('funding_duration').value),
+      funding_velocity:       parseFloat(document.getElementById('funding_velocity').value),
+      round_intensity:        parseFloat(document.getElementById('round_intensity').value),
+      country_code:           parseInt(document.getElementById('country_code').value),
+      adjusted_ethical_score: parseFloat(document.getElementById('adjusted_ethical_score').value),
+      sentiment_score:        parseFloat(document.getElementById('sentiment_score').value),
+      data_quality_score:     parseFloat(document.getElementById('data_quality_score').value),
+      ...toggleValues
+    };
+
+    const apiUrl = document.getElementById('apiUrl').value;
+    const endpoint = currentMode === 'financier' ? '/predict/financier' : '/predict/complet';
+
+    try {
+      const res = await fetch(apiUrl + endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.detail || 'Erreur ' + res.status);
+      }
+
+      const data = await res.json();
+      renderResults(data, currentMode);
+
+    } catch (e) {
+      errorBox.textContent = '⚠ ' + e.message;
+      errorBox.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btnText.style.display = 'block';
+      spinner.style.display = 'none';
+    }
+  }
+
+  // ── Render results ──
+  function renderResults(data, mode) {
+    const resultsEl = document.getElementById('results');
+    resultsEl.style.display = 'block';
+
+    const isSuccess = data.prediction.toLowerCase().includes('succès');
+    const scoreVal = data.score_final ?? data.probabilite_succes;
+
+    // Verdict
+    const verdictBox = document.getElementById('verdictBox');
+    verdictBox.className = 'verdict ' + (isSuccess ? 'success' : 'failure');
+    document.getElementById('verdictIcon').textContent = isSuccess ? '🚀' : '📉';
+    document.getElementById('verdictText').textContent = isSuccess ? 'Succès Probable' : 'Échec Probable';
+    document.getElementById('scoreDisplay').textContent = (scoreVal * 100).toFixed(1) + '%';
+
+    // Score bars
+    const barsEl = document.getElementById('scoreBars');
+    barsEl.innerHTML = '';
+
+    const bars = mode === 'complet' && data.detail ? [
+      { label: 'Score Stacking',     val: data.detail.score_stacking,        color: '#00d4ff' },
+      { label: 'Composante Fin.',    val: data.detail.composante_financiere,  color: '#0099cc' },
+      { label: 'Score Éthique Adj.', val: data.detail.adjusted_ethical_score, color: '#7c3aed' },
+      { label: 'Composante ESG',     val: data.detail.composante_ethique,     color: '#a78bfa' },
+      { label: 'Score Final',        val: scoreVal,                           color: isSuccess ? '#10b981' : '#ef4444' },
+    ] : [
+      { label: 'Probabilité Succès', val: data.probabilite_succes, color: '#00d4ff' },
+      { label: 'Probabilité Échec',  val: data.probabilite_echec,  color: '#ef4444' },
+    ];
+
+    bars.forEach(b => {
+      const pct = Math.min(100, Math.max(0, (b.val ?? 0) * 100)).toFixed(1);
+      barsEl.innerHTML += `
+        <div class="score-row">
+          <span class="score-label">${b.label}</span>
+          <div class="score-bar-bg">
+            <div class="score-bar-fill" data-width="${pct}" style="background:${b.color}"></div>
+          </div>
+          <span class="score-val">${pct}%</span>
+        </div>`;
+    });
+
+    // Animate bars
+    setTimeout(() => {
+      document.querySelectorAll('.score-bar-fill').forEach(el => {
+        el.style.width = el.dataset.width + '%';
+      });
+    }, 50);
+
+    // Chips
+    const chips = document.getElementById('chipsContainer');
+    chips.innerHTML = '';
+    if (mode === 'complet' && data.detail) {
+      const d = data.detail;
+      [
+        { label: 'Stacking',   val: ((d.score_stacking ?? 0) * 100).toFixed(1) + '%' },
+        { label: 'Sentiment',  val: ((d.sentiment_score ?? 0.5) * 100).toFixed(0) + '%' },
+        { label: 'Qualité ESG', val: ((d.data_quality_score ?? 0) * 100).toFixed(0) + '%' },
+      ].forEach(c => {
+        chips.innerHTML += `<div class="chip"><div class="chip-label">${c.label}</div><div class="chip-value">${c.val}</div></div>`;
+      });
+    } else {
+      chips.innerHTML += `<div class="chip"><div class="chip-label">Probabilité Succès</div><div class="chip-value">${((data.probabilite_succes ?? 0)*100).toFixed(1)}%</div></div>`;
+      chips.innerHTML += `<div class="chip"><div class="chip-label">Probabilité Échec</div><div class="chip-value">${((data.probabilite_echec ?? 0)*100).toFixed(1)}%</div></div>`;
+    }
+
+    // ESG badge
+    document.getElementById('esgBadge').innerHTML = '';
+
+    resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+</script>
+</body>
+</html>
