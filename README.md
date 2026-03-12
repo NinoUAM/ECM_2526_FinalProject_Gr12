@@ -85,6 +85,9 @@ Traditional financial analysis alone is therefore insufficient.
 
 The goal of this project is to develop a **machine learning system capable of predicting both commercial viability and ethical risk** associated with pharmaceutical startups.
 
+The project seeks to answer the following key question:
+**How can we anticipate the financial success of a pharmaceutical startup while ensuring that it acts ethically, in order to optimize capital allocation decisions?**
+
 ---
 
 # Value Proposition
