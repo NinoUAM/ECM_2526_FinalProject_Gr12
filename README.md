@@ -1,269 +1,212 @@
-# ECM_2526_FinalProject_Gr12
-### Predicting Investment Potential and Ethical Risk in Pharmaceutical Startups
+ECM_2526_FinalProject_Gr12
+Predicting Financial Success and Ethical Risk in Pharmaceutical Startups
+<p align="center"> <a href="https://github.com"> <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github"> </a> <a href="https://www.kaggle.com"> <img src="https://img.shields.io/badge/Kaggle-Datasets-20BEFF?style=for-the-badge&logo=kaggle"> </a> <a href="https://scikit-learn.org"> <img src="https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange?style=for-the-badge&logo=scikitlearn"> </a> <a href="https://pytorch.org"> <img src="https://img.shields.io/badge/NLP-Transformers-red?style=for-the-badge&logo=pytorch"> </a> </p>
+Project Overview
 
-<p align="center">
+This project develops a machine learning system designed to support investment decisions in pharmaceutical startups.
 
-<a href="https://github.com">
-<img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
-</a>
+Investing in biotech companies is particularly challenging due to:
 
-<a href="https://www.kaggle.com">
-<img src="https://img.shields.io/badge/Kaggle-Datasets-20BEFF?style=for-the-badge&logo=kaggle">
-</a>
+long R&D cycles
 
-<a href="https://scikit-learn.org">
-<img src="https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange?style=for-the-badge&logo=scikitlearn">
-</a>
+high failure rates in drug development
 
-<a href="https://pytorch.org">
-<img src="https://img.shields.io/badge/NLP-Transformers-red?style=for-the-badge&logo=pytorch">
-</a>
+complex regulatory environments
 
-</p>
+limited transparency on early-stage companies
 
----
+To address these challenges, our system combines financial prediction models with automated ethical analysis based on ESG criteria.
 
-# Project Overview
+The goal is to provide a data-driven framework to evaluate both the financial potential and the ethical risk of biotech startups.
 
-This project explores the use of **Machine Learning to evaluate pharmaceutical startups for investment purposes**, combining two key dimensions:
+Academic Context
 
-- **Commercial viability**
-- **Ethical and ESG risk**
+This project was conducted as part of the Data Science curriculum at École Centrale Méditerranéenne, within the DDEFI specialization track.
 
-Biotechnology innovation represents one of the most promising yet uncertain sectors for investors. Pharmaceutical startups often operate in highly complex regulatory environments and face ethical scrutiny related to clinical trials, accessibility of medicines, and societal impact.
+Instructor
 
-The objective of this project is to build a **data-driven decision support system** capable of assessing both **investment potential and ethical risk**.
+Sitraka Matthieu FORLER
 
-The system is designed primarily for **investment funds focusing on ethical biotech innovation**.
+Senior Data Scientist — Professor of Applied Machine Learning
 
----
+Project Team
+Hajar Belgroun
 
-# Teaching & Supervision
+GitHub
+ • Kaggle
 
-This project was conducted within the **Data Science curriculum at École Centrale Méditerranéenne**, in the **DDEFI specialization track**.
+Audrey Nourry
 
-### Course Instructor
+GitHub
+ • Kaggle
 
-[Sitraka Matthieu FORLER](https://www.linkedin.com/in/sitraka-matthieu-forler/)  
-Senior Data Scientist  
-Professor of Applied Machine Learning
+Nino Tissot
 
----
+GitHub
+ • Kaggle
 
-# Project Team
+Mailis Briens
 
-## Team Members
+GitHub
+ • Kaggle
 
-### Jajar26
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/Jajar26)
-[![Kaggle](https://img.shields.io/badge/Kaggle-Profile-blue?logo=kaggle)](https://www.kaggle.com/jajar26)
+Problem Statement
 
-### audreynrr
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/audreynrr)
-[![Kaggle](https://img.shields.io/badge/Kaggle-Profile-blue?logo=kaggle)](https://www.kaggle.com/audreynrr)
+Evaluating the future success of pharmaceutical startups is difficult because most early-stage companies lack long-term performance indicators.
 
-### NinoUAM
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/NinoUAM)
-[![Kaggle](https://img.shields.io/badge/Kaggle-Profile-blue?logo=kaggle)](https://www.kaggle.com/ninouam)
+In addition, ethical considerations are increasingly important in healthcare innovation, particularly regarding:
 
-### mailisbrs
-[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?logo=github)](https://github.com/mailisbrs)
-[![Kaggle](https://img.shields.io/badge/Kaggle-Profile-blue?logo=kaggle)](https://www.kaggle.com/mailisbrs)
+clinical trial transparency
 
----
+governance practices
 
-# Problem Statement
+access to treatments
 
-Evaluating pharmaceutical startups presents several challenges for investors:
+societal impact of medical technologies
 
-- Information is **fragmented across many sources**
-- **Ethical concerns are difficult to quantify**
-- Biotech innovation involves **high uncertainty and long R&D cycles**
-- Many startups **fail before reaching commercialization**
+This project explores the following question:
 
-Traditional financial analysis alone is therefore insufficient.
+Can machine learning help anticipate the financial success of pharmaceutical startups while integrating ethical risk into the evaluation process?
 
-The goal of this project is to develop a **machine learning system capable of predicting both commercial viability and ethical risk** associated with pharmaceutical startups.
+Dataset
 
-The project seeks to answer the following key question:
-**How can we anticipate the financial success of a pharmaceutical startup while ensuring that it acts ethically, in order to optimize capital allocation decisions?**
+The project relies on the Crunchbase venture capital dataset, which includes 54,294 startups across all sectors.
 
----
+After filtering for pharma and biotech related companies, the dataset contains:
 
-# Value Proposition
+4,207 startups in the sector
 
-The proposed system provides investors with:
+225 acquisitions
 
-- Centralized analysis of **startup data**
-- Quantified **ethical risk scoring**
-- **ML-based predictions** of startup value
-- **Decision support tools** for ethical investment strategies
+147 failures
 
-This framework integrates both **financial indicators and ESG considerations** into a unified evaluation system.
+3,730 operating companies
 
----
+A data audit also revealed 108 startups labeled as "operating" despite having IPO-related financial indicators.
+These cases were reclassified as successful exits, increasing the number of training examples.
 
-# Why Machine Learning
+To prevent data leakage, the model is trained only on startups with known outcomes before January 1st, 2012, and evaluated on companies still operating afterward.
 
-Machine learning is necessary because:
+Feature Engineering
 
-- Data sources are **large and heterogeneous**
-- Information evolves **dynamically over time**
-- Ethical signals are embedded in **textual information**
-- Relationships between features are **complex and nonlinear**
+Instead of using raw variables, several investor-oriented financial indicators were created, including:
 
-ML models are therefore well suited to uncover **hidden patterns across financial, scientific, and textual datasets**.
+startup age
 
----
+time to first funding
 
-# Dataset Construction
+total fundraising duration
 
-The team constructs a **structured dataset combining multiple information sources**, including:
+funding speed
 
-**Startup Metadata**
+funding regularity
 
-- founding year
-- headquarters location
-- founders
-- research area
+Additional binary features indicate the presence of different funding types:
 
-**Scientific Publications**
+seed
 
-- related research papers
-- citation metrics
-- scientific impact
+venture
 
-**ESG Indicators**
+grant
 
-- governance metrics
-- environmental impact indicators
-- social responsibility indicators
+round A
 
-**Financial Data**
+round B
 
-- funding rounds
-- venture capital investment
-- valuation history
+Missing values are handled using IterativeImputer for most models, while HistGradientBoosting handles them natively.
 
-**Textual Data**
+Machine Learning Models
 
-- news articles
-- public reports
-- research documents
+Four models were trained and evaluated:
 
-These sources are **cleaned, standardized, and merged into a unified dataset**.
+Logistic Regression
 
----
+Random Forest
 
-# Models
+HistGradientBoosting
 
-The system relies on **two core machine learning components**.
+Support Vector Machine (SVM)
 
----
+To address class imbalance, all models use:
 
-# Model 1 — Ethical Scoring
+class_weight = "balanced"
 
-The first model uses **ESG-BERT**, a transformer-based NLP model designed to analyze **ESG-related textual content**.
+The final predictor uses a StackingClassifier, combining the outputs of the base models using a logistic regression meta-model.
 
-Input sources include:
+Performance
 
-- news coverage
-- public reports
-- scientific publications
-- regulatory documents
+Final model performance:
 
-The model produces an **ethical score** for each startup.
+F1-score: 80.5%
 
-This score quantifies potential risks related to:
+Recall: 96%
 
-- clinical ethics
-- governance practices
-- environmental responsibility
-- access to healthcare.
+Cross-validation F1: 78.6% ± 3%
 
----
+These results indicate strong ability to identify successful startups while maintaining generalization.
 
-# Model 2 — Investment Prediction
+Ethical Analysis
 
-The second model predicts the **investment potential of each startup**.
+Beyond financial prediction, the project introduces an automated ethical scoring component.
 
-Key outputs:
+For selected startups, textual data is collected from:
 
-- predicted **future valuation**
-- **probability of successful funding**
+ClinicalTrials.gov (clinical trials)
 
-Input features include:
+PubMed (scientific publications)
 
-- financial indicators
-- startup characteristics
-- innovation metrics
-- **ethical score generated by ESG-BERT**
+company websites (mission and governance)
 
-This architecture integrates **financial and ethical dimensions into a single predictive framework**.
+Texts are analyzed using ESG-BERT, a transformer-based model specialized in ESG classification.
 
----
+A sentiment analysis step using DistilBERT adjusts scores based on the tone of ESG-related mentions.
 
-# Pipeline Architecture
+To account for missing information, a data quality score weights the reliability of each ethical evaluation.
 
-The project follows a structured **Machine Learning pipeline**:
+Final Scoring Framework
 
-1. **Data Collection**  
-   Aggregation of startup, financial, and ESG datasets
+The final investment score combines financial and ethical components:
 
-2. **Data Cleaning**  
-   Handling missing values, inconsistencies, and duplicates
+Final Score = 70% Financial Score + 30% Ethical Score
 
-3. **ESG Text Analysis**  
-   NLP processing of textual documents
+This weighting reflects a balanced investment strategy prioritizing financial potential while accounting for ethical risks.
 
-4. **Ethical Scoring**  
-   Ethical score generation using ESG-BERT
+Among the analyzed companies, DistalMotion emerges as the top candidate based on this combined evaluation.
 
-5. **Feature Engineering**  
-   Creation of structured predictive features
+Deployment
 
-6. **ML Prediction Model**  
-   Training models to predict investment success
+To make the system usable in practice, the models are deployed through a FastAPI service.
 
-7. **Investment Recommendation Layer**  
-   Decision-support output for investors
+Available endpoints include:
 
----
+financial scoring
 
-# Expected Outputs
+combined financial + ethical scoring
 
-The system produces:
+batch scoring (up to 100 startups)
 
-- **Ethical Risk Score**
-- **Predicted Future Startup Value**
-- **Probability of Funding Success**
-- **Investment Decision Indicators**
+An interactive dashboard allows analysts to explore startup evaluations directly from a web interface.
 
-These outputs support **ethical venture capital decision-making in biotech**.
-
----
-
-# Limitations
+Limitations
 
 Several limitations should be considered:
 
-- Startup data may be **incomplete**
-- ESG scoring may introduce **model bias**
-- Predictions remain **probabilistic**
-- Biotech markets are inherently **volatile**
+startup data may be incomplete or outdated
 
-Therefore, the system should be used as a **decision-support tool rather than a fully automated investment engine**.
+ethical scoring depends on available textual sources
 
----
+long-term startup success remains inherently uncertain
 
-# Future Improvements
+The system is therefore intended as a decision-support tool, not as a fully automated investment engine.
 
-Potential extensions include:
+Future Improvements
 
-- integration with **larger ESG datasets**
-- linking with **biotech innovation databases**
-- advanced **transformer models for scientific literature**
-- **reinforcement learning approaches** for investment strategy optimization
-- interactive **startup analytics dashboards**
+Possible extensions include:
 
----
+expanding the dataset with post-2012 startup outcomes
+
+scaling ESG analysis to all startups instead of the top 20
+
+empirically optimizing the financial/ethical weighting
+
+improving NLP coverage of scientific literature
