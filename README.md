@@ -114,7 +114,6 @@ Four models were trained and compared:
 
 Because the dataset contains more successful startups than failures, all models use:
 
-```python
 class_weight = "balanced"
 
 to reduce the effect of class imbalance.
@@ -158,7 +157,6 @@ A **data quality score** is also used to account for missing sources.
 
 The final evaluation combines both dimensions:
 
-```markdown
 Final Score = 0.7 × Financial Score + 0.3 × Ethical Score
 
 This weighting reflects a strategy where **financial potential remains the primary driver**, while **ethical considerations influence the final ranking**.
