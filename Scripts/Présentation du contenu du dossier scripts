@@ -1,10 +1,63 @@
+# 1. EDA & Data Cleaning
 
-Dans ce sous dossier :
+Explore Data Analysis : script d’exploration des données
 
-Le script d'EDA : Explore Data Analysis
-Si trouvent les df.head() , df.describe() etc , AINSI QUE LA PARTIE DE CLEANING 
-ANALYSE.ipynb 
-CLEANNING.ipynb
+Affiche df.head(), df.describe() et d’autres statistiques descriptives
 
-Le script de ML
-Et pour les plus aguerris une partie de front et de back pouvant permettre l'industrialisation d'une API REST. Cette partie est une partie Bonifiée.
+Visualisations initiales pour comprendre la structure des données
+
+ANALYSE.ipynb : notebook d’exploration détaillée, graphiques et premières observations
+
+CLEANNING.ipynb : notebook de nettoyage et prétraitement
+
+Renommage des colonnes
+
+Filtrage sur pharma/biotech
+
+Conversion et nettoyage de funding_total_usd
+
+Gestion des valeurs manquantes
+
+Ces fichiers permettent de préparer un dataset propre et exploitable pour la modélisation.
+
+# 2. Machine Learning
+
+Scripts et notebooks pour la modélisation ML :
+
+Feature engineering
+
+Entraînement des modèles (Logistic Regression, Random Forest, Gradient Boosting, SVM)
+
+Optimisation (GridSearchCV, hyperparamètres)
+
+StackingClassifier
+
+Evaluation des performances (F1, Recall, matrices de confusion)
+
+Ces scripts permettent de reproduire les prédictions financières et de générer le score ML des startups.
+
+# 3.Analyse Éthique — Pipeline NLP
+
+Pipeline de collecte automatique de données textuelles depuis ClinicalTrials.gov, PubMed et les sites web des startups.
+
+Analyse par ESG-BERT (26 catégories ESG) couplée à une analyse de sentiment via DistilBERT.
+
+Génération d'un score éthique ajusté et d'un data_quality_score selon le nombre de sources collectées.
+
+Fusion avec le score financier pour produire le classement final.
+
+# 4. API / Industrialisation 
+
+Une partie front-end et back-end est disponible dans le dossier scripts
+
+Permet de déployer les modèles dans une API REST
+
+Endpoints disponibles :
+
+Score financier seul
+
+Score financier + score éthique
+
+Batch scoring pour plusieurs startups
+
+Dashboard interactif pour tester les startups directement depuis un navigateur
